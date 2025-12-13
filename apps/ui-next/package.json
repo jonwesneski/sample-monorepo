@@ -2,6 +2,13 @@
   "name": "@org/ui-next",
   "version": "0.0.1",
   "private": true,
+  "scripts": {
+    "dev": "nx serve ui-next",
+    "build": "nx build ui-next",
+    "lint": "nx lint ui-next",
+    "test": "nx test ui-next",
+    "e2e": "nx e2e ui-next-e2e"
+  },
   "dependencies": {
     "next": "~16.0.1",
     "react": "^19.0.0",
