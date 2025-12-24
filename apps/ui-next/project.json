@@ -1,5 +1,13 @@
 {
   "targets": {
+    "serve": {
+      "executor": "@nx/next:server",
+      "options": {
+        "buildTarget": "@org/ui-next:build",
+        "port": 3000
+      }
+    },
+
     "dev": {
       "executor": "@nx/next:server",
       "options": {
