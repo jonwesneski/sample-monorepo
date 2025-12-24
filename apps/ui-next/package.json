@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "nx serve ui-next",
-    "build": "nx build ui-next",
+    "dev": "next dev",
+    "build": "next build",
     "lint": "nx lint ui-next",
     "test": "nx test ui-next",
     "e2e": "nx e2e ui-next-e2e"
