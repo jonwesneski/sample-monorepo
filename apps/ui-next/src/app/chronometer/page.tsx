@@ -6,12 +6,14 @@ const ONE_MINUTE_MS = 1000 * 60;
 const ONE_HOUR_MS = ONE_MINUTE_MS * 60;
 export default () => {
   const [elapsedTimeMs, setElapsedTimeMs] = useState(0);
-  const [timeState, setTimeState] = useState<'Stop' | 'Start'>('Start');
+  const [isRunning, setIsRunning] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout>(null);
+  // Use a ref to store the start time to avoid re-renders
+  // also useRef keeps same value between renders unlike let
   const startTimeRef = useRef(0);
 
   useEffect(() => {
-    if (timeState === 'Stop') {
+    if (isRunning) {
       startTimeRef.current = Date.now() - elapsedTimeMs;
       intervalRef.current = setInterval(() => {
         setElapsedTimeMs(Date.now() - startTimeRef.current);
@@ -19,12 +21,10 @@ export default () => {
     } else {
       clearInterval(intervalRef.current!);
     }
-  }, [timeState]);
+  }, [isRunning]);
 
   const handleClick = () => {
-    setTimeState((prev) => {
-      return prev === 'Start' ? 'Stop' : 'Start';
-    });
+    setIsRunning((prev) => !prev);
   };
 
   const hour = ((elapsedTimeMs / ONE_HOUR_MS) % 24).toFixed().padStart(2, '0');
@@ -37,7 +37,7 @@ export default () => {
       <span>{hour}</span>:<span>{minute}</span>:<span>{second}</span>:
       <span>{`${elapsedTimeMs % 1000}`.padStart(3, '0')}</span>
       <div>
-        <button onClick={handleClick}>{timeState}</button>
+        <button onClick={handleClick}>{isRunning ? 'Stop' : 'Start'}</button>
       </div>
     </div>
   );
